@@ -57,9 +57,23 @@ public class BMICalculatorApp {
     
     private static void calculateSingleBMI() {
         System.out.println("\n--- Quick BMI Calculation ---");
+        System.out.println("Choose input units:");
+        System.out.println("1. Metric (kg/m)");
+        System.out.println("2. Imperial (lb/ft-in)");
+        int unit = getIntInput("Enter 1 or 2: ");
         
-        double weight = getDoubleInput("Enter weight (kg): ");
-        double height = getDoubleInput("Enter height (m): ");
+        double weight;
+        double height;
+        if (unit == 2) {
+            double lbs = getDoubleInput("Enter weight (lb): ");
+            int feet = getIntInput("Enter height (feet): ");
+            double inches = getDoubleInput("Enter height (inches): ");
+            weight = poundsToKg(lbs);
+            height = feetInchesToMeters(feet, inches);
+        } else {
+            weight = getDoubleInput("Enter weight (kg): ");
+            height = getDoubleInput("Enter height (m): ");
+        }
         
         try {
             BMI bmi = new BMI(weight, height);
@@ -77,8 +91,23 @@ public class BMICalculatorApp {
         System.out.print("Enter name: ");
         String name = scanner.nextLine();
         
-        double weight = getDoubleInput("Enter weight (kg): ");
-        double height = getDoubleInput("Enter height (m): ");
+        System.out.println("Choose input units:");
+        System.out.println("1. Metric (kg/m)");
+        System.out.println("2. Imperial (lb/ft-in)");
+        int unit = getIntInput("Enter 1 or 2: ");
+        
+        double weight;
+        double height;
+        if (unit == 2) {
+            double lbs = getDoubleInput("Enter weight (lb): ");
+            int feet = getIntInput("Enter height (feet): ");
+            double inches = getDoubleInput("Enter height (inches): ");
+            weight = poundsToKg(lbs);
+            height = feetInchesToMeters(feet, inches);
+        } else {
+            weight = getDoubleInput("Enter weight (kg): ");
+            height = getDoubleInput("Enter height (m): ");
+        }
         int age = getIntInput("Enter age: ");
         
         try {
@@ -142,5 +171,13 @@ public class BMICalculatorApp {
                 System.out.println("Please enter a valid integer.");
             }
         }
+    }
+    
+    private static double poundsToKg(double lbs) {
+        return lbs * 0.45359237;
+    }
+    
+    private static double feetInchesToMeters(int feet, double inches) {
+        return feet * 0.3048 + inches * 0.0254;
     }
 }
